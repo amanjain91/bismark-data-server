@@ -6,6 +6,9 @@ import re
 from django.conf import settings
 from django.http import HttpResponse
 
+from boto.s3.connection import S3Connection
+from boto.s3.key import Key
+
 node_id_matcher = re.compile(r'OW[0-9A-F]{12}$')
 
 uploader_modules = {
@@ -28,8 +31,8 @@ def upload(request):
         raise ValueError('Upload is too big')
     if node_id_matcher.match(request.REQUEST['node_id']) is None:
         raise ValueError('Invalid node id')
+    path = join(settings.UPLOADS_ROOT, module, request.REQUEST['node_id'])	
 
-    path = join(settings.UPLOADS_ROOT, module, request.REQUEST['node_id'])
     try:
         makedirs(path)
     except OSError, e:
@@ -41,4 +44,11 @@ def upload(request):
     fsync(handle.fileno())
     handle.close()
 
+    conn = S3Connection(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
+    bucket = conn.get_bucket('bismark_data')
+    key = Key(bucket)
+    path2 = join(module, request.REQUEST['node_id'], basename(request.REQUEST['filename']))
+    key.key = path2
+    key.set_contents_from_string(request.raw_post_data)
+	
     return HttpResponse('done')

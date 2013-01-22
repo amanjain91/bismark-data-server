@@ -21,6 +21,8 @@ DATABASES = {
 }
 
 UPLOADS_ROOT = '/srv/www/bismark/bismark_data'
+AWS_ACCESS_KEY_ID = 'AKIAIO7NQOKKTTFE63SQ'
+AWS_SECRET_ACCESS_KEY = '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'
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
