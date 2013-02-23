@@ -1,5 +1,5 @@
 #! /bin/bash
-
+#runs on ec2
 #This script tars all files in /bismark_data/data/ and puts them in /bismark_data/outbox/
 
 tar_all_files()

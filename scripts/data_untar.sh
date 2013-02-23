@@ -2,6 +2,7 @@
 
 # untars all files in ~/bismark_data_from_s3 and puts them in ~/bismark_data_untared.
 # also moves the .tar versions to ~/bismark_data_backup
+# runs on dp4
 
 for tar_file in $(find ~/bismark_data_from_s3 -name *.tar -mmin +5)
 do
