@@ -45,11 +45,11 @@ def upload(request):
     fsync(handle.fileno())
     handle.close()
 
-    conn = S3Connection(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
-    bucket = conn.get_bucket('bismark_data')
-    key = Key(bucket)
-    path = join(module, request.REQUEST['node_id'], basename(request.REQUEST['filename']))
-    key.key = path
-    key.set_contents_from_string(request.raw_post_data)
+#    conn = S3Connection(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
+#    bucket = conn.get_bucket('bismark_data')
+#    key = Key(bucket)
+#    path = join(module, request.REQUEST['node_id'], basename(request.REQUEST['filename']))
+#    key.key = path
+#    key.set_contents_from_string(request.raw_post_data)
 	
     return HttpResponse('done')
