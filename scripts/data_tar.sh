@@ -1,3 +1,7 @@
+#! /bin/bash
+
+#This script tars all files in /bismark_data/data/ and puts them in /bismark_data/outbox/
+
 tar_all_files()
 {
 	tar_name=/bismark_data/outbox/$1_$2_$(date '+%y%m%d_%H%M%S').tar

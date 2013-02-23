@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#This script uploads all files in /bismark_data/outbox to s3 and also moves the files to /bismark_data/uploaded
+
 for file in $(find /bismark_data/outbox -name *.tar -mmin +5)
 do
 	base_filename=$(basename $file)
