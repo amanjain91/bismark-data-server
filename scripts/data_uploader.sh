@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Exit on first error
+set -e
+
 #This script uploads all files in /bismark_data/outbox to s3 and also moves the files to /bismark_data/uploaded
 #runs on ec2
 
