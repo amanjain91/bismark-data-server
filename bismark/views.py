@@ -15,6 +15,7 @@ uploader_modules = {
     'active': 1 * 2**20,
     'bismark-experiments-manager': 10 * 2**20,
     'bismark-updater': 10 * 2**20,
+    'localizer': 2**20,
     'mac-analyzer': 10 * 2**20,
     'nazanin-traceroute': 10 * 2**20,
     'passive': 10 * 2**20,
@@ -31,6 +32,18 @@ def upload(request):
         raise ValueError('Upload is too big')
     if node_id_matcher.match(request.REQUEST['node_id']) is None:
         raise ValueError('Invalid node id')
+    
+    path = join(settings.UPLOADS_ROOT, module, request.REQUEST['node_id'])
+    try:
+        makedirs(path)
+    except OSError, e:
+        if e.errno != errno.EEXIST:
+            raise
+    handle = open(join(path, basename(request.REQUEST['filename'])), 'w')
+    handle.write(request.raw_post_data)
+    handle.flush()
+    fsync(handle.fileno())
+    handle.close()
 
     conn = S3Connection(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
     bucket = conn.get_bucket('bismark_data')

@@ -16,6 +16,9 @@ framework.
 import os, sys
 sys.path.append('/srv/www/bismark/');
 sys.path.append('/srv/www/bismark/bismark');
+sys.path.append('/');
+sys.path.append('/bismark_data');
+sys.path.append('/bismark_data/data');
 os.environ['HTTPS'] = "on"
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "bismark.settings")
 
