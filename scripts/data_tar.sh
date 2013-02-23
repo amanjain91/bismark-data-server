@@ -8,9 +8,14 @@ set -e
 
 tar_all_files()
 {
+	# We use '|' as the sed delimeter in tar --transform, so we must remove it
+	# from filenames to prefix sed syntax errors.
 	archive_dir=$(echo $1_$2_$(date '+%Y%m%d_%H%M%S') | sed 's/|/-/g')
 	tar_name=/bismark_data/outbox/${archive_dir}.tar
+	# When calling tar, use 'r' (append) instead of 'c' (create) because find
+	# could call tar multiple times if there are too many filenames to pass.
 	find $3/ -type f -mmin +5 -exec tar --remove-files --transform "s|.*/|$archive_dir/|" -rvf $tar_name {} +
+	# Append mode doesn't work with zipped files, so we must zip afterward.
 	gzip $tar_name
 }
 
