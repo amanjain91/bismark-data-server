@@ -2,7 +2,7 @@
 
 # Exit on first error
 set -e
-
+#set -x
 #runs on ec2
 #This script tars all files in /bismark_data/data/ and puts them in /bismark_data/outbox/
 
@@ -16,7 +16,10 @@ tar_all_files()
 	# could call tar multiple times if there are too many filenames to pass.
 	find $3/ -type f -mmin +5 -exec tar --remove-files --transform "s|.*/|$archive_dir/|" -rvf $tar_name {} +
 	# Append mode doesn't work with zipped files, so we must zip afterward.
-	[ -f $tar_name ] && gzip $tar_name
+ 	if [ -f $tar_name ] 
+	then 
+		gzip $tar_name 
+	fi
 }
 
 
