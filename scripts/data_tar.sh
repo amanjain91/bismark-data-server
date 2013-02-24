@@ -16,7 +16,7 @@ tar_all_files()
 	# could call tar multiple times if there are too many filenames to pass.
 	find $3/ -type f -mmin +5 -exec tar --remove-files --transform "s|.*/|$archive_dir/|" -rvf $tar_name {} +
 	# Append mode doesn't work with zipped files, so we must zip afterward.
-	gzip $tar_name
+	[ -f $tar_name ] && gzip $tar_name
 }
 
 
