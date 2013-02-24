@@ -7,7 +7,7 @@ set -e
 # also moves the .tar versions to ~/bismark_data_backup
 # runs on dp4
 
-find ~/bismark_data_from_s3 -name "*.tar.gz" -mmin +5 | while read -r tar_file; do
+find ~/bismark_data_from_s3 -name "*.tar.gz" -mmin +5 -mmin -65 | while read -r tar_file; do
 	experiment_name=$(basename $tar_file | cut -d'_' -f1)
 	device_name=$(basename $tar_file | cut -d'_' -f2)
 	datestamp=$(basename $tar_file | cut -d'_' -f3)
@@ -17,6 +17,4 @@ find ~/bismark_data_from_s3 -name "*.tar.gz" -mmin +5 | while read -r tar_file; 
 	# files will be extracted directly into the directory given by -C.
 	tar --strip-components=1 -xzvf $tar_file -C ~/bismark_data_untarred/$experiment_name/$device_name/$datestamp
 
-	mkdir -p ~/bismark_data_backup/$experiment_name/$device_name/$datestamp
-	mv $tar_file ~/bismark_data_backup/$experiment_name/$device_name/$datestamp
 done
