@@ -23,5 +23,3 @@ root_dir='bismark_data_from_s3_by_date'
 # Sync yesterdays folder for redundancy
 s3cmd sync --skip-existing s3://bismark_data/tarballs_by_date/$yesterdays_date ~/$root_dir/$yesterdays_date
 s3cmd sync --skip-existing s3://bismark_data/tarballs_by_date/$todays_date ~/$root_dir/$todays_date
-~
-
