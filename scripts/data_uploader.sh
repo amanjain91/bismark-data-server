@@ -14,7 +14,9 @@ find /bismark_data/outbox -name "*.tar.gz" -mmin +5 | while read -r file; do
 	datestamp=$(echo $base_filename | cut -d'_' -f3)
 	from=$file
 	to=s3://bismark_data/tarballs/$experiment_name/$device_name/$datestamp/$base_filename
+	to2=s3://bismark_data/tarballs_by_date/$datestamp/$experiment_name/$device_name/$base_filename
 	s3cmd -v put $from $to
+	s3cmd -v put $from $to2
 	mkdir -p $ebs_dir/$experiment_name/$device_name/$datestamp
 	mv $file $ebs_dir/$experiment_name/$device_name/$datestamp/$base_filename
 done
