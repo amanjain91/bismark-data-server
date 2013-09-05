@@ -6,6 +6,7 @@
 # Exit on first error
 set -e
 
+# Blank file acting like a mutex
 lock=(~/s3sync_by_date.lockfile)
 
 # Open lockfile and name its file handle 200 (number chosen arbitarily)
