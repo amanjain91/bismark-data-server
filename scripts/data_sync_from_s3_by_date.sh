@@ -7,7 +7,7 @@
 set -e
 
 # Blank file acting like a mutex
-lock=(~/s3sync_by_date.lockfile)
+lock=~/s3sync_by_date.lockfile
 
 # Open lockfile and name its file handle 200 (number chosen arbitarily)
 exec 200>$lock
@@ -18,7 +18,7 @@ flock -n 200 || exit 1
 # Rest of syncing code below
 todays_date=$(date '+%Y%m%d')
 yesterdays_date=$(date --date="yesterday" '+%Y%m%d')
-root_dir=(~/bismark_data_from_s3_by_date)
+root_dir=~/bismark_data_from_s3_by_date
 
 # Sync yesterdays folder for redundancy
 mkdir -p $root_dir/$yesterdays_date
